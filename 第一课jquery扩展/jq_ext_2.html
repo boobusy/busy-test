@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jq扩展demo: 给JQ扩展一个类</title>
+	<meta charset = "utf-8">
+</head>
+<body>
+
+
+
+<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+		
+//定义自己的类
+var boobusy = {};
+	
+	boobusy.name = "我是一个JS对象属性";
+	boobusy.num1 = 21;
+	boobusy.num2 = 12;
+	boobusy.say  = function(str){
+		alert("你要说的话:" + str);
+	}
+
+	boobusy.add  = function(){
+		//加上括号和不加括号的区别
+		alert("属性num1和num2 相加的和是:" + (this.num1 + this.num2));
+		alert("属性num1和num2 相加的和是:" + this.num1 + this.num2);
+	}
+
+
+
+//扩展JQ,加入一个自定义类
+$.extend({"boobusy" : boobusy});
+
+
+//打印与调用
+alert($.boobusy.name);
+$.boobusy.say("我们正在扩展类.");
+$.boobusy.add();
+
+
+</script>
+
+
+</body>
+</html>

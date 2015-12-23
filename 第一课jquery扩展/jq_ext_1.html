@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jq扩展demo: 最基本的扩展写法</title>
+	<meta charset = "utf-8">
+</head>
+<body>
+
+
+
+<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+		
+//扩展JQ基本属性
+$.extend({
+	"names" : "boobusy",
+	"age"  : 12,
+	"say" : function(str){
+		alert("hi mama: " + str);
+		return "echo end";
+	}
+
+});	
+
+
+//打印
+console.log($.age,$.names,$.say("你好"));
+
+
+</script>
+
+
+</body>
+</html>

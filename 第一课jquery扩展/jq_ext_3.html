@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jq扩展demo: 给JQ的DOM对象扩展方法</title>
+	<meta charset = "utf-8">
+
+	<style>
+		#demo{
+			text-align: center;
+			line-height: 150px;
+			width: 300px;
+			height:150px;
+			margin: 20% auto;
+			border: 1px solid #f00; 
+			background: 
+		}
+	</style>
+</head>
+<body>
+
+
+
+<div id = "demo"> my demo </div>
+
+
+<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+		
+//定义自己的类
+var boobusy = {};
+	
+	boobusy.dom  = null;
+	boobusy.conf = {};
+	boobusy.num  = 0;
+
+	boobusy.init  = function(){
+		
+		this.dom.mouseout(function(){
+			//这里为什么不用 this.dom
+
+			 var color =   '#' +    
+				    (function(color){    
+				    return (color +=  '0123456789abcdef'[Math.floor(Math.random()*16)])    
+				      && (color.length == 6) ?  color : arguments.callee(color);    
+				   })(''); 
+
+
+			boobusy.dom.css("background",color);	
+
+		});
+		
+	}
+
+
+
+
+$.fn.boobusy = function(conf){
+
+
+	//注意这里的this
+	boobusy.dom  = this;
+	boobusy.conf = conf;
+	return boobusy.init();
+}
+
+
+//调用方式
+$("#demo").boobusy();
+
+</script>
+
+
+</body>
+</html>
