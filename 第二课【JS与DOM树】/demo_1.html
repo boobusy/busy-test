@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<style type="text/css">
+
+		h1{ text-align: center; background: #efefef; margin-top: 10%; margin-bottom: 5%;}
+		.box{ 
+			margin: 0;
+			padding: 0;
+			border: 2px solid #f00;
+			width: 300px; 
+			min-height: 200px;
+		}
+
+		.box li{
+			list-style: none;
+			line-height: 40px;
+			background: #0c0;
+			height: 40px;
+			width:96%;
+			margin:2%;
+			text-align: center;
+		}
+
+
+		#box-1{
+			float: left; margin-left: 20%; 
+		} 
+		#box-2{
+			float: right; margin-right: 20%;
+		}
+	</style>
+</head>
+<body>
+
+
+
+
+
+
+
+	<h1>		JS DOM 增删操作 与 选择器		</h1>	
+
+	<div class="box" id="box-1">
+
+		<li class="box-li" aa="1">111111111111111111111111</li>
+		<li class="box-li" aa="2">222222222222222222222222</li>
+		<li class="box-li" bb="3">333333333333333333333333</li>
+	
+
+	</div>
+
+
+
+
+	<div class="box" id="box-2">
+		<li class="box-li">
+			<button  key="add"    >插入一条</button>
+			<button  key="remove" >移除一条</button>
+		</li>
+
+		<li class="box-li">
+			<button name="btn-2"  key="add"    >插入头条</button>
+			<button name="btn-2"  key="remove" >移除头条</button>
+		</li>	
+	</div>
+
+
+	
+<script type="text/javascript">
+/*
+	Window 对象
+	Window 对象表示浏览器中打开的窗口。
+	如果文档包含框架（frame 或 iframe 标签），浏览器会为 HTML 文档创建一个 window 对象，并为每个框架创建一个额外的 window 对象。
+	注释：没有应用于 window 对象的公开标准，不过所有浏览器都支持该对象。
+*/
+/* 
+
+	DOM = Document 对象
+	每个载入浏览器的 HTML 文档都会成为 Document 对象。
+	Document 对象使我们可以从脚本中对 HTML 页面中的所有元素进行访问。
+	提示：Document 对象是 Window 对象的一部分，可通过 window.document 属性对其进行访问。
+
+*/
+
+//getElementById()			返回对拥有指定 id 的第一个对象的引用。
+//getElementsByName()		返回带有指定名称的对象集合。
+//getElementsByTagName()	返回带有指定标签名的对象集合。
+//getElementsByClass		返回带有指定 class 的对象的引用 (这个都没有API的,需要自己实现,下面的是网上的一段实现)
+
+
+//getElementsByClass 的实现
+var getElementsByClass = function(searchClass,node,tag) { 
+		var classElements = new Array(); //初始化获取到的class节点变量
+
+		if ( node == null ) {
+			node = document;  	//如果未指定上级DOM节点,默认为搜索document
+		}
+		if ( tag == null ) {
+			tag = '*'; 			//如果未指定节点名称,默认为搜索所有
+		}
+
+		var els = node.getElementsByTagName(tag); //获取上级节点下的 tag 节点
+		var elsLen = els.length; 			
+
+		var pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)");  //建立有class名称的正则
+		for (i = 0, j = 0; i < elsLen; i++) { 						//遍历 els
+			if ( pattern.test(els[i].className) ) { 				//正则class
+				classElements[j] = els[i]; 							//保存正则成功的节点
+				j++; 
+			} 
+		} 
+		return classElements; 										//返回所有搜索到的节点
+} 
+
+
+
+
+//第一种获取节点对象
+var btn1 = document.getElementsByTagName("button");
+var k    = 3;
+
+for (var i = 0; i < btn1.length; i++) {
+ 	
+ 	 //添加事件
+ 	 //代码使用是通用事件注册方法, 
+ 	 //attachEvent = IE 与  addEventListener != IE, 常用的JS注册事件函数
+ 	 btn1[i].onclick = function(){
+ 	 	//appendChild
+ 	 	//insertBefore
+
+
+        if(this.getAttribute("key") == "add"){
+
+	 	 	var newNode = document.createElement("li");
+	 	 		newNode.className = "box-li"; 			//setAttribute(key,val) 兼容性写法
+	 	 		newNode.innerHTML = "新加的" + (++k);
+	 	 		document.getElementById("box-1").appendChild(newNode);
+        }
+
+        if(this.getAttribute("key") == "remove"){
+        	var lis = getElementsByClass("box-li",document.getElementById("box-1"),"*");   
+        	document.getElementById("box-1").removeChild(lis[lis.length-1]);
+        }
+
+
+
+ 	 }
+}
+
+
+
+//第二种获取节点对象
+var btn2 = document.getElementsByName("btn-2");
+
+
+for (var i = 0; i < btn2.length; i++) {
+ 	
+ 	 btn2[i].onclick = function(){
+ 	 		
+ 	 	if(this.getAttribute("key") == "add"){
+ 	 		var box1 = document.getElementById("box-1")
+	 	 	var newNode = document.createElement("li");
+	 	 		newNode.className = "box-li"; 			//setAttribute(key,val) 兼容性写法
+	 	 		newNode.innerHTML = "新加的" + (++k);
+
+	 	 		document.getElementById("box-1").insertBefore(newNode,box1.childNodes[0]);
+        }
+
+        
+        if(this.getAttribute("key") == "remove"){
+        	var lis = getElementsByClass("box-li",document.getElementById("box-1"),"*");   
+        	document.getElementById("box-1").removeChild(lis[0]);
+        }
+        
+
+
+
+ 	 }
+}
+
+
+</script>
+
+
+
+</body>
+</html>
