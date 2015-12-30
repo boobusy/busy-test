@@ -1,0 +1,37 @@
+
+第一课作业：
+		JS写JQ扩展;
+
+
+https://github.com/boobusy/busy-test/tree/master/第二课【JS与DOM树】
+
+第二课作业：
+		
+		1.	模拟JQ选择器，
+			$$("id","xxxx")
+			$$("class","xxxx")
+			$$("tag","xxxx")
+			$$("name","xxxx")
+
+
+			提示：CODE 
+
+				function xxx(a,b){
+
+					if(a == "id"){
+
+						//code ...
+					}
+
+					if(a == "tag"){
+
+						//code ...
+					}
+
+					//code.....
+				}
+
+			2.  模拟JQ . ATTR
+
+
+			3.  模拟JQ.  事件注册
